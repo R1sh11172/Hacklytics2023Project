@@ -38,9 +38,9 @@ companies_dict = { #dictionaryt for extracting company data
     'Ford':'F',
     'Bank of America':'BAC'}
 
-data_source = 'yahoo'
-start_date = '2015-04-25'
-end_date = '2020-04-25'
+data_source = 'stooq'
+start_date = '2017-04-25'
+end_date = '2022-04-25'
 df = data.DataReader(list(companies_dict.values()), data_source, start_date, end_date)
 
 df.head()
@@ -70,6 +70,7 @@ plt.yticks(fontsize = 20)
 plt.xlabel('Date',fontsize = 15)
 plt.ylabel('Opening price',fontsize = 15)
 plt.plot(df['Open']['AAPL'])
+
 
 plt.figure(figsize = (20,10)) # Adjusting figure size
 plt.title('Company:Amazon',fontsize = 20)
@@ -135,7 +136,7 @@ kmeans = KMeans(n_clusters = 10,max_iter = 1000)
 pipeline = make_pipeline(normalizer,kmeans)
 pipeline.fit(movements)
 predictions = pipeline.predict(movements)
-df1 = pd.DataFrame({'labels':labels,'companies':list(companies_dict)}).sort_values(by=['labels'],axis = 0)
+df1 = pd.DataFrame({'Cluster':predictions,'companies':list(companies_dict)}).sort_values(by=['Cluster'],axis = 0)
 
 
 normalizer = Normalizer()
@@ -144,4 +145,32 @@ kmeans = KMeans(n_clusters = 10,max_iter = 1000)
 pipeline = make_pipeline(normalizer,reduced_data,kmeans)
 pipeline.fit(movements)
 predictions = pipeline.predict(movements)
-df2 = pd.DataFrame({'labels':labels,'companies':list(companies_dict.keys())}).sort_values(by=['labels'],axis = 0)
+df2 = pd.DataFrame({'Cluster':predictions,'companies':list(companies_dict.keys())}).sort_values(by=['Cluster'],axis = 0)
+
+from sklearn.decomposition import PCA
+# Reduce the data
+reduced_data = PCA(n_components = 2).fit_transform(norm_movements)
+# Define step size of mesh
+h = 0.01
+# Plot the decision boundary
+x_min,x_max = reduced_data[:,0].min()-1, reduced_data[:,0].max() + 1
+y_min,y_max = reduced_data[:,1].min()-1, reduced_data[:,1].max() + 1
+xx,yy = np.meshgrid(np.arange(x_min,x_max,h),np.arange(y_min,y_max,h))
+# Obtain labels for each point in the mesh using our trained model
+Z = kmeans.predict(np.c_[xx.ravel(),yy.ravel()])
+# Put the result into a color plot
+Z = Z.reshape(xx.shape)
+# Define color plot
+cmap = plt.cm.Paired
+# Plotting figure
+plt.clf()
+plt.figure(figsize=(10,10))
+plt.imshow(Z,interpolation = 'nearest',extent=(xx.min(),xx.max(),yy.min(),yy.max()),cmap = cmap,aspect = 'auto',origin = 'lower')
+plt.plot(reduced_data[:,0],reduced_data[:,1],'k.',markersize = 5)
+# Plot the centroid of each cluster as a white X
+centroids = kmeans.cluster_centers_
+plt.scatter(centroids[:,0],centroids[:,1],marker = 'x',s = 169,linewidths = 3,color = 'w',zorder = 10)
+plt.title('K-Means clustering on stock market movements (PCA-Reduced data)')
+plt.xlim(x_min,x_max)
+plt.ylim(y_min,y_max)
+plt.show()
