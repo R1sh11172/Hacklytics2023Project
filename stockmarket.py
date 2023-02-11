@@ -62,6 +62,7 @@ plt.yticks(fontsize = 20)
 plt.xlabel('Date',fontsize = 15)
 plt.ylabel('Opening price',fontsize = 15)
 plt.plot(df['Open']['AMZN'])
+plt.savefig('hack2023/src/my_plot5.png')
 plt.subplot(1,2,2) 
 
 plt.title('Company:Apple',fontsize = 20)
@@ -70,6 +71,7 @@ plt.yticks(fontsize = 20)
 plt.xlabel('Date',fontsize = 15)
 plt.ylabel('Opening price',fontsize = 15)
 plt.plot(df['Open']['AAPL'])
+plt.savefig('hack2023/src/my_plot3.png')
 
 
 plt.figure(figsize = (20,10)) # Adjusting figure size
@@ -99,6 +101,7 @@ plt.yticks(fontsize = 20)
 plt.xlabel('Date',fontsize = 20)
 plt.ylabel('Movement',fontsize = 20)
 plt.plot(movements[0][0:30])
+plt.savefig('hack2023/src/my_plot6.png')
 
 plt.figure(figsize = (20,10)) 
 plt.title('Company:Amazon',fontsize = 20)
@@ -107,6 +110,7 @@ plt.yticks(fontsize = 20)
 plt.xlabel('Date',fontsize = 20)
 plt.ylabel('Volume',fontsize = 20)
 plt.plot(df['Volume']['AMZN'],label = 'Open')
+plt.savefig('hack2023/src/my_plot4.png')
 
 plt.figure(figsize = (20,8)) 
 ax1 = plt.subplot(1,2,1)
@@ -123,6 +127,8 @@ plt.yticks(fontsize = 20)
 plt.xlabel('Date',fontsize = 20)
 plt.ylabel('Movement',fontsize = 20)
 plt.plot(movements[1])
+plt.savefig('hack2023/src/my_plot2.png')
+
 
 normalizer = Normalizer()
 norm_movements = normalizer.fit_transform(movements)
@@ -167,6 +173,8 @@ plt.clf()
 plt.figure(figsize=(10,10))
 plt.imshow(Z,interpolation = 'nearest',extent=(xx.min(),xx.max(),yy.min(),yy.max()),cmap = cmap,aspect = 'auto',origin = 'lower')
 plt.plot(reduced_data[:,0],reduced_data[:,1],'k.',markersize = 5)
+plt.savefig('hack2023/src/my_plot1.png')
+
 # Plot the centroid of each cluster as a white X
 centroids = kmeans.cluster_centers_
 plt.scatter(centroids[:,0],centroids[:,1],marker = 'x',s = 169,linewidths = 3,color = 'w',zorder = 10)
