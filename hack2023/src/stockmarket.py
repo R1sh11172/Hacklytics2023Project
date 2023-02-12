@@ -1,4 +1,6 @@
-from pandas_datareader import data 
+from pandas_datareader import data as pdr
+import yfinance as yf 
+yf.pdr_override()
 import matplotlib.pyplot as plt
 import pandas as pd
 import datetime
@@ -11,6 +13,9 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 import os
 from twilio.rest import Client
+from pandas.plotting import table
+from IPython.display import display
+import dataframe_image as dfi
 
 
 warnings.simplefilter
@@ -41,10 +46,9 @@ companies_dict = { #dictionaryt for extracting company datacd
     'Ford':'F',
     'Bank of America':'BAC'}
 
-data_source = 'stooq'
-start_date = '2017-04-25'
-end_date = '2022-04-25'
-df = data.DataReader(list(companies_dict.values()), data_source, start_date, end_date)
+start_date = '2015-04-25'
+end_date = '2020-04-25'
+df = pdr.get_data_yahoo(list(companies_dict.values()), start_date, end_date)
 
 df.head()
 df.isna().sum()
@@ -146,6 +150,7 @@ pipeline = make_pipeline(normalizer,kmeans)
 pipeline.fit(movements)
 predictions = pipeline.predict(movements)
 df1 = pd.DataFrame({'Cluster':predictions,'companies':list(companies_dict)}).sort_values(by=['Cluster'],axis = 0)
+dfi.export(df1, 'dataframe1.png')
 
 
 normalizer = Normalizer()
@@ -155,6 +160,7 @@ pipeline = make_pipeline(normalizer,reduced_data,kmeans)
 pipeline.fit(movements)
 predictions = pipeline.predict(movements)
 df2 = pd.DataFrame({'Cluster':predictions,'companies':list(companies_dict.keys())}).sort_values(by=['Cluster'],axis = 0)
+dfi.export(df1, 'dataframe2.png')
 
 from sklearn.decomposition import PCA
 # Reduce the data
@@ -176,7 +182,6 @@ plt.clf()
 plt.figure(figsize=(10,10))
 plt.imshow(Z,interpolation = 'nearest',extent=(xx.min(),xx.max(),yy.min(),yy.max()),cmap = cmap,aspect = 'auto',origin = 'lower')
 plt.plot(reduced_data[:,0],reduced_data[:,1],'k.',markersize = 5)
-plt.savefig('hack2023/src/my_plot1.png')
 
 # Plot the centroid of each cluster as a white X
 centroids = kmeans.cluster_centers_
@@ -185,6 +190,7 @@ plt.title('K-Means clustering on stock market movements (PCA-Reduced data)')
 plt.xlim(x_min,x_max)
 plt.ylim(y_min,y_max)
 plt.show()
+plt.savefig('hack2023/src/my_plot1.png')
 
 def twilio(input):
     account_sid = 'AC4145f33db19c8adff71fab19c45859e1'
