@@ -10,9 +10,10 @@ from sklearn.preprocessing import Normalizer
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
+
 warnings.simplefilter
 
-companies_dict = { #dictionaryt for extracting company data
+companies_dict = { #dictionaryt for extracting company datacd 
     'Amazon':'AMZN',
     'Apple':'AAPL',
     'Walgreen':'WBA',
@@ -182,3 +183,22 @@ plt.title('K-Means clustering on stock market movements (PCA-Reduced data)')
 plt.xlim(x_min,x_max)
 plt.ylim(y_min,y_max)
 plt.show()
+
+
+
+import os
+from twilio.rest import Client
+
+account_sid = 'AC4145f33db19c8adff71fab19c45859e1'
+auth_token = 'bd8f9acaf45717159680d027d982a3c2'
+client = Client(account_sid, auth_token)
+
+message = client.messages \
+    .create(
+         body='This is the ship that made the Kessel Run in fourteen parsecs?',
+         from_='+14694614640',
+         to='+14695697885'
+     )
+
+print(message.sid)
+
