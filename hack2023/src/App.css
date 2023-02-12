@@ -3,48 +3,35 @@
 }
 
 .plot1 {
-  height: 80vmin;
+  height: 60vmin;
   pointer-events: none;
-  border-radius: 10px;
 }
 
 .plot2 {
-  height: 45vmin;
+  height: 60vmin;
   pointer-events: none;
 }
 
 .plot3 {
-  height: 45vmin;
+  height: 60vmin;
   pointer-events: none;
 }
 
-.plot4 {
-  height: 45vmin;
-  pointer-events: none;
-}
 
-.plot5 {
-  height: 45vmin;
-  pointer-events: none;
-}
-
-.plot6 {
-  height: 45vmin;
-  pointer-events: none;
-}
 
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(3px + 2vmin);
   color: white;
 }
 
 .App-link {
   color: #61dafb;
 }
+
