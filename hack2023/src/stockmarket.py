@@ -9,6 +9,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import Normalizer
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
+import os
+from twilio.rest import Client
 
 
 warnings.simplefilter
@@ -184,21 +186,18 @@ plt.xlim(x_min,x_max)
 plt.ylim(y_min,y_max)
 plt.show()
 
+def twilio(input):
+    account_sid = 'AC4145f33db19c8adff71fab19c45859e1'
+    auth_token = 'bd8f9acaf45717159680d027d982a3c2'
+    client = Client(account_sid, auth_token)
 
+    message = client.messages \
+        .create(
+            body='The wesbite has been updated with all the new predictions',
+            from_='+14694614640',
+            to=input
+        )
 
-import os
-from twilio.rest import Client
-
-account_sid = 'AC4145f33db19c8adff71fab19c45859e1'
-auth_token = 'bd8f9acaf45717159680d027d982a3c2'
-client = Client(account_sid, auth_token)
-
-message = client.messages \
-    .create(
-         body='This is the ship that made the Kessel Run in fourteen parsecs?',
-         from_='+14694614640',
-         to='+14695697885'
-     )
-
-print(message.sid)
-
+    print(message.sid)
+    return
+twilio('+14695697885')
