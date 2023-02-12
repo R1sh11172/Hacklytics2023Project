@@ -3,8 +3,9 @@
 }
 
 .plot1 {
-  height: 60vmin;
+  height: 80vmin;
   pointer-events: none;
+  border-radius: 10px;
 }
 
 .plot2 {
