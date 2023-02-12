@@ -6,13 +6,11 @@ import plot4 from "./my_plot4.png";
 import plot5 from "./my_plot5.png";
 import plot6 from "./my_plot6.png";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { send_sms } from "./send_sms.js";
-
+var phoneNumbers = [];
+var i = 0;
 function App() {
-  function getNumber() {
-    send_sms();
-  }
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -21,11 +19,8 @@ function App() {
           Receive crucial information about the market through a simple text
           message!
         </p>
-        <p>Enter your number to begin</p>
-        <form>
-          <input type="text" name="name" id="userInput" />
-          <input type="submit" value="Submit" onClick={() => getNumber()} />
-        </form>
+        
+
         <img src={plot1} className="plot1" alt="logo" />
         <p className="cluster_subtitle">Cluster of stock data</p>
         <img src={plot2} className="plot2" alt="logo" />
