@@ -22,7 +22,7 @@ from sklearn.decomposition import PCA
 
 warnings.simplefilter
 
-companies_dict = { #dictionaryt for extracting company datacd 
+companies_dict = { #dictionary for extracting company datacd 
     'Amazon':'AMZN',
     'Apple':'AAPL',
     'Walgreen':'WBA',
